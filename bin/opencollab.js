@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import yargs from 'yargs';
 import mkdirp from 'mkdirp';
 import fs from 'fs-extra';
@@ -19,48 +17,19 @@ const RPC_PORT = '8545';
 const CONTRACT_DIR = '.mango/contract/;';
 const ISSUES_DIR = '.mango/issues/';
 
-const args = yargs
-      .option('host', {
-        description: 'HTTP host of Ethereum node',
-        alias: 'h',
-        default: RPC_HOST
-      })
-      .option('port', {
-        description: 'HTTP port of Ethereum node',
-        alias: 'p',
-        default: RPC_PORT
-      })
-      .option('account', {
-        description: 'Sender account',
-        alias: 'a',
-        type: 'string'
-      })
-      .command('init', 'Create a Mango repository')
-      .command('status', 'Check the status of a Mango repository')
-      .command('issues', 'List issues for a Mango repository')
-      .command('get-issue <id>', 'Get a issue for a Mango repository')
-      .command('new-issue', 'Create a new issue for a Mango repository')
-      .command('edit-issue <id>', 'Edit an issue for a Mango repository')
-      .command('delete-issue <id>', 'Delete issue for a Mango repository')
-      .command('fork <path>', 'Create a fork of a Mango repository')
-      .command('merge-fork <path>', 'Merge a fork into a Mango repository')
-      .command('pull-requests', 'List open pull requests for a Mango repository')
-      .command('get-pull-request <id>', 'Get a pull request referencing a fork')
-      .command('open-pull-request <issueId> <forkAddress>', 'Open a pull request referencing a fork')
-      .command('close-pull-request <id>', 'Close a pull request referencing a fork')
-      .command('maintainers', 'List maintainers for a Mango repository')
-      .command('add-maintainer <address>', 'Add a maintainer to a Mango repository')
-      .command('remove-maintainer <address>', 'Remove a maintainer from a Mango repository')
-      .command('set-obsolete', 'Set a Mango repository as obsolete')
-      .string('_')
-      .help()
-      .usage('Usage: $0 [command]');
+let argv = {
+  host: RPC_HOST,
+  port: RPC_PORT
+}
 
 
-
-function ensureGitRepo() {
+/**
+ * Ensure a git repo exists at a specified directory path
+ * @param {string} directory 
+ */
+function ensureGitRepo(directory) {
   return new Promise((resolve, reject) => {
-    fs.stat('.git', (err, stats) => {
+    fs.stat(path.join(directory, '.git'), (err, stats) => {
       if (err) {
         reject(new Error('Need to be in a Git repository.'));
       } else {
@@ -397,151 +366,15 @@ function mangoSetObsolete(mangoAddress, account) {
     .then(address => console.log('[obsolete] Mango repository ' + address));
 }
 
-// CLI
 
-const { argv } = args;
 
-if (argv._.length === 0) {
-  args.showHelp();
-}
 
-const command = argv._[0];
-
-switch (command) {
-
-  case 'init':
-    ensureGitRepo()
-      .then(() => getAccount())
-      .then(account => mangoInit(account))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'status':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoStatus(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'issues':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoIssues(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'get-issue': {
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoGetIssue(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-  }
-
-  case 'new-issue':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoNewIssue(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'edit-issue':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoEditIssue(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'delete-issue':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoDeleteIssue(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'fork':
-    ensureMangoRepo()
-      .then(() => mangoFork())
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'merge-fork':
-    ensureMangoRepo()
-      .then(() => mangoMergeFork())
-      .catch(err => console.error(err))
-
-    break;
-
-  case 'pull-requests':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoPullRequests(values[0], values[1]))
-      .catch(err => console.error(err))
-
-    break;
-
-  case 'get-pull-request':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoGetPullRequest(values[0], values[1]))
-      .catch(err => console.error(err))
-
-    break;
-
-  case 'open-pull-request':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoOpenPullRequest(values[0], values[1]))
-      .catch(err => console.error(err))
-
-    break;
-
-  case 'close-pull-request':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoClosePullRequest(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'maintainers':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoMaintainers(values[0], values[1]))
-      .catch(err => console.error(err))
-
-    break;
-
-  case 'add-maintainer':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoAddMaintainer(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'remove-maintainer':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoRemoveMaintainer(values[0], values[1]))
-      .catch(err => console.error(err));
-
-    break;
-
-  case 'set-obsolete':
-    ensureMangoRepo()
-      .then(() => Promise.all([getMangoAddress(), getAccount()]))
-      .then(values => mangoSetObsolete(values[0], values[1]))
-      .catch(err => console.error(err));
-
-  default:
-    break;
+/**
+ * Initialize an OpenCollab repo at a specified directory path
+ * @param {string} directory 
+ */
+export function init(directory) {
+  return ensureGitRepo(directory)
+          .then(() => getAccount())
+          .then(account => mangoInit(account))
 }
