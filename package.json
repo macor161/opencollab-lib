@@ -29,11 +29,7 @@
     "shelljs": "^0.7.7",
     "swarm-js": "^0.1.10",
     "truffle-contract": "^2.0.0",
-    "web3": "^0.16.0",
-    "yargs": "^4.7.1"
-  },
-  "yargs": {
-    "parse-numbers": false
+    "web3": "^0.16.0"
   },
   "devDependencies": {
     "assert": "^1.4.1"
