@@ -3,7 +3,7 @@ import mkdirp from 'mkdirp';
 import fs from 'fs-extra';
 import path from 'path';
 import shell from 'shelljs';
-import Web3 from 'Web3';
+import Web3 from 'web3';
 
 import { default as initLib } from '../index';
 import IssueEditor from '../lib/issueEditor';
