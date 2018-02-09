@@ -7,21 +7,23 @@
 
 Below is a list of opencollab functionalities and their current state.
 
-* init
-* status
-* issues
-* get-issue
-* new-issue
-* edit-issue
-* delete-issue
-* fork
-* merge-fork
-* pull-requests
-* get-pull-request
-* open-pull-request
-* close-pull-request
-* maintainers
-* add-maintainer
-* remove-maintainer
-* set-obsolete
+| Command               | State | Tests |
+| ----------------------|:-----:|:-----:|
+| init                  |   ‎✔   |  ‎✔    |
+| status                |   ‎✔   |  ✔    |
+| issues                |   x   |  x    |
+| get-issue             |   x   |  x    |
+| new-issue             |   x   |  x    |
+| edit-issue            |   x   |  x    |
+| delete-issue          |   x   |  x    |
+| fork                  |   x   |  x    |
+| merge-fork            |   x   |  x    |
+| pull-requests         |   x   |  x    |
+| get-pull-request      |   x   |  x    |
+| open-pull-request     |   x   |  x    |
+| close-pull-request    |   x   |  x    |
+| maintainers           |   x   |  x    |
+| add-maintainer        |   x   |  x    |
+| remove-maintainer     |   x   |  x    |
+| set-obsolete          |   x   |  x    |       
 
