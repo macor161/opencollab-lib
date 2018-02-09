@@ -2,4 +2,4 @@ node_modules
 public
 npm-debug.log
 .vscode
-.mango
+test/tmp

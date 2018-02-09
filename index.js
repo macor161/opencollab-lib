@@ -5,18 +5,18 @@ import shell from 'shelljs'
 import Web3 from 'web3'
 
 import { ensureGitRepo } from './lib/ensure-git-repo'
-import { default as initLib } from './lib/init-lib';
-import IssueEditor from './lib/issueEditor';
-import Swarm from 'swarm-js';
-import { mangoInit } from './lib/mango'
+import { default as initLib } from './lib/init-lib'
+import IssueEditor from './lib/issueEditor'
+import Swarm from 'swarm-js'
+import { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo } from './lib/mango'
 
-const swarm = Swarm.at('http://swarm-gateways.net');
+const swarm = Swarm.at('http://swarm-gateways.net')
 
-const RPC_HOST = 'localhost';
-const RPC_PORT = '8545';
+const RPC_HOST = 'localhost'
+const RPC_PORT = '8545'
 
-const CONTRACT_DIR = '.mango/contract/;';
-const ISSUES_DIR = '.mango/issues/';
+const CONTRACT_DIR = '.mango/contract/'
+const ISSUES_DIR = '.mango/issues/'
 
 let argv = {
   host: RPC_HOST,
@@ -27,20 +27,20 @@ let argv = {
 
 
 function getAccount() {
-  const { host, port } = argv;
+  const { host, port } = argv
 
-  const provider = new Web3.providers.HttpProvider(`http:\/\/${host}:${port}`);
-  const web3 = new Web3(provider);
+  const provider = new Web3.providers.HttpProvider(`http:\/\/${host}:${port}`)
+  const web3 = new Web3(provider)
 
   return new Promise((resolve, reject) => {
     web3.eth.getAccounts((err, accounts) => {
       if (err != null) {
         reject(err);
       } else {
-        resolve(accounts[0]);
+        resolve(accounts[0])
       }
-    });
-  });
+    })
+  })
 }
 
 
@@ -58,7 +58,19 @@ function init(directory) {
           .then(account => mangoInit(account, directory))
 }
 
+/**
+ * Check the status of a Mango repository
+ * @param {string} directory 
+ */
+function status(directory) {
+  return ensureMangoRepo(directory)
+          .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+          .then(values => mangoStatus(values[0], values[1]))
+          .catch(err => console.error(err))
+}
+
 
 module.exports = {
-  init
+  init,
+  status
 }
