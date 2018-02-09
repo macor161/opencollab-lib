@@ -102,6 +102,7 @@ function mangoInit(account) {
     .then(address => {
       console.log('Mango repository created: ' + address);
       setMango(address);
+      return address;
     }).catch(err => console.error(err));
 }
 

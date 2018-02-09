@@ -4,21 +4,32 @@ var fs = require('fs-extra')
 
 describe('init', () => {
     it("should return the mango address", done => {
-        // TODO
+        fs.remove('tmp')
+        .then(() => fs.mkdirp('tmp/init1/.git'))
+        .then(() => opencollab.init('tmp/init1'))        
+        .then(result => {
+            if (!result || !result.indexOf || result.indexOf('0x') !== 0)
+                done(assert.fail())
+
+            done()
+        })
+        .catch(e => {
+            assert.fail()        
+            done()
+        })        
     })
 
-
+    /*
     it("should throw if no git repository is found", done => {
         fs.rmdir('tmp')
         .then(() => fs.mkdirp('tmp/init-no-git'))
         .then(() => opencollab.init('tmp/init-no-git'))        
-        .then(e => {
+        .then(result => {
             assert.fail()
             done()
         })
-        .catch(e => {
-            console.log(e)            
+        .catch(e => {         
             done()
         })
-    })
+    })*/
 })
