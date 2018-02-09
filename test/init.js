@@ -1,5 +1,5 @@
 var assert = require('assert')
-var opencollab = require('../public/bin/opencollab.js')
+var opencollab = require('../public/index')
 var fs = require('fs-extra')
 
 describe('init', () => {

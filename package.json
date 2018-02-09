@@ -2,7 +2,7 @@
   "name": "opencollab-lib",
   "version": "0.0.1",
   "description": "Library port of OpenCollab",
-  "main": "public/bin/opencollab.js",
+  "main": "public/index.js",
   "scripts": {
     "test": "mocha",
     "build": "rm -rf public && mkdir public && cp -r build public/build && babel . --out-dir public --ignore node_modules",
