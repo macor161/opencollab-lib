@@ -14,12 +14,12 @@ describe('init', () => {
             done()
         })
         .catch(e => {
-            assert.fail()        
+            assert.fail()
             done()
         })        
     })
 
-    /*
+    
     it("should throw if no git repository is found", done => {
         fs.rmdir('tmp')
         .then(() => fs.mkdirp('tmp/init-no-git'))
@@ -31,5 +31,5 @@ describe('init', () => {
         .catch(e => {         
             done()
         })
-    })*/
+    })
 })
