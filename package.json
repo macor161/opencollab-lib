@@ -6,8 +6,7 @@
   "scripts": {
     "test": "mocha",
     "build": "rm -rf public && mkdir public && cp -r build public/build && babel . --out-dir public --ignore node_modules",
-    "prepublish": "npm run build",
-    "opencollab": "babel-node ./bin/opencollab.js"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
