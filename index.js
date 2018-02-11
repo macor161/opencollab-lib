@@ -66,6 +66,7 @@ function status(directory) {
   return ensureMangoRepo(directory)
           .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
           .then(values => mangoStatus(values[0], values[1]))
+          .then(status => Object.assign(status, { name: path.basename(directory).replace('.git', '') }))
           .catch(err => console.error(err))
 }
 
