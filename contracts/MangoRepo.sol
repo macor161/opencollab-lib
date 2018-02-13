@@ -19,6 +19,9 @@ pragma solidity ^0.4.6;
 contract MangoRepo {
   bool public obsolete;
 
+  string name;
+  string description;
+
   address[] maintainerAddresses;
   mapping (address => bool) maintainers;
 
@@ -58,7 +61,9 @@ contract MangoRepo {
     _;
   }
 
-  function MangoRepo() {
+  function MangoRepo(string _name, string _description) {
+    name = _name;
+    description = _description;
     maintainers[msg.sender] = true;
     maintainerAddresses.push(msg.sender);
     obsolete = false;
@@ -85,6 +90,7 @@ contract MangoRepo {
 
     return -1;
   }
+
 
   function setRef(string ref, string hash) maintainerOnly {
     if (__findRef(ref) == -1)
@@ -193,6 +199,14 @@ contract MangoRepo {
     }
 
     return -1;
+  }
+
+  function getName() constant returns (string) {
+    return name;
+  }
+
+  function getDescription() constant returns (string) {
+    return description;
   }
 
   function getMaintainer(uint idx) constant returns (address) {
