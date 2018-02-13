@@ -52,22 +52,21 @@ function getAccount() {
  * Initialize an OpenCollab repo at a specified directory path
  * @param {string} directory 
  */
-function init(directory) {
+function init(directory, name, description) {
   return ensureGitRepo(directory)
           .then(() => getAccount())
-          .then(account => mangoInit(account, directory))
+          .then(account => mangoInit(account, directory, name, description))
 }
 
 /**
  * Check the status of a Mango repository
  * @param {string} directory 
  */
-function status(directory) {
-  return ensureMangoRepo(directory)
-          .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-          .then(values => mangoStatus(values[0], values[1]))
-          .then(status => Object.assign(status, { name: path.basename(directory).replace('.git', '') }))
-          .catch(err => console.error(err))
+async function status(directory) {
+  await ensureMangoRepo(directory)
+  let values = await Promise.all([getMangoAddress(directory), getAccount()])
+  let status = Object.assign({ mangoAddress: values[0], name: path.basename(directory).replace('.git', '') }, await mangoStatus(values[0], values[1]))
+  return status
 }
 
 
