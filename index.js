@@ -8,7 +8,7 @@ import { ensureGitRepo } from './lib/ensure-git-repo'
 import { default as initLib } from './lib/init-lib'
 import IssueEditor from './lib/issueEditor'
 import Swarm from 'swarm-js'
-import { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo } from './lib/mango'
+import { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoNewIssue } from './lib/mango'
 
 const swarm = Swarm.at('http://swarm-gateways.net')
 
@@ -66,11 +66,52 @@ async function status(directory) {
   await ensureMangoRepo(directory)
   let values = await Promise.all([getMangoAddress(directory), getAccount()])
   let status = Object.assign({ mangoAddress: values[0], name: path.basename(directory).replace('.git', '') }, await mangoStatus(values[0], values[1]))
+  
+  let repoInfo = await Promise.all([ 
+      status.contract.getName(),
+      status.contract.getDescription(),
+      status.contract.issueCount()
+    ])
+
+  status.name = repoInfo[0]
+  status.description = repoInfo[1]
+  status.issueCount = repoInfo[2]
+
   return status
 }
 
 
+/**
+ * List issues for a Mango repository
+ * @param {string} directory 
+ */
+function issues(directory) {
+  return ensureMangoRepo(directory)
+    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(values => mangoIssues(values[0], values[1]))
+    .catch(err => console.error(err))
+}
+
+
+function getIssue(directory, issue) {
+  return ensureMangoRepo(directory)
+    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(values => mangoGetIssue(values[0], values[1], issue))
+    .catch(err => console.error(err))
+}
+
+
+function newIssue(directory, issueContent) {
+  return ensureMangoRepo(directory)
+    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(values => mangoNewIssue(values[0], values[1], issueContent))
+    .catch(err => console.error(err))
+}
+
 module.exports = {
   init,
-  status
+  status,
+  issues,
+  getIssue,
+  newIssue
 }

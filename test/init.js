@@ -13,7 +13,7 @@ describe('init', () => {
     it("should return the mango address", done => {
         fs.remove('test/tmp')
         .then(() => fs.mkdirp('test/tmp/init1/.git'))
-        .then(() => opencollab.init('test/tmp/init1'))        
+        .then(() => opencollab.init('test/tmp/init1', 'test repo', "this is description"))        
         .then(result => {
             
             expect(result).to.be.a('string')
