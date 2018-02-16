@@ -2,6 +2,38 @@
 
 `opencollab-lib` is a library port of [opencollab-cli](https://github.com/yondonfu/opencollab-cli). It can be used in any NodeJs or Electron app.
 
+# Install
+
+Two dependencies are currently needed to use `opencollab-lib`: [TestRPC](https://github.com/ethereumjs/testrpc) for testing purpose and [git-remote-mango](https://github.com/axic/git-remote-mango) to handle the `mango://` protocol. Then run `npm install`.
+
+```
+npm install -g ethereumjs-testrpc git-remote-mango
+npm install
+```
+
+
+# Usage
+
+Make sure `TestRPC` is running. Gas usage has not been addressed so it is likely necessary to run TestRPC with a high gas limit.
+
+```
+testrpc -l 1000000000
+```
+
+# Testing
+
+First, make sure that `TestRPC` is running:
+
+```
+testrpc -l 1000000000
+```
+
+And since the library currently use babel to transpile its code, be sure to run `npm run build` before starting the tests:
+
+```
+npm run build
+npm test
+```
 
 # State of the Library
 
@@ -11,9 +43,9 @@ Below is a list of opencollab functionalities and their current state.
 | ----------------------|:-----:|:-----:|
 | init                  |   ‎✔   |  ‎✔    |
 | status                |   ‎✔   |  ✔    |
-| issues                |   x   |  x    |
-| get-issue             |   x   |  x    |
-| new-issue             |   x   |  x    |
+| issues                |   ✔   |  ✔    |
+| get-issue             |   ✔   | WIP   |
+| new-issue             |   ✔   | WIP   |
 | edit-issue            |   x   |  x    |
 | delete-issue          |   x   |  x    |
 | fork                  |   x   |  x    |
