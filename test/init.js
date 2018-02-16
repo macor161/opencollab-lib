@@ -1,23 +1,28 @@
-var assert = require('assert')
-var opencollab = require('../public/index')
-var fs = require('fs-extra')
-var chai = require('chai')
+let assert = require('assert')
+let opencollab = require('../public/index')
+let fs = require('fs-extra')
+let chai = require('chai')
 
 chai.use(require('chai-string'))
 
-var { expect } = chai
+let { expect } = chai
 
 
 describe('init', () => {
 
-    it("should return the mango address", done => {
+    before(done => {
         fs.remove('test/tmp')
-        .then(() => fs.mkdirp('test/tmp/init1/.git'))
+        .then(() => fs.mkdirp('test/tmp'))
+        .then(() => done())
+    })    
+
+    it("should return the mango address", done => {
+        fs.mkdirp('test/tmp/init1/.git')
         .then(() => opencollab.init('test/tmp/init1', 'test repo', "this is description"))        
         .then(result => {
             
             expect(result).to.be.a('string')
-            expect(result).to.startsWith('0x')
+            expect(result).to.startWith('0x')
 
             done()
         })
@@ -29,8 +34,7 @@ describe('init', () => {
 
     
     it("should throw if no git repository is found", done => {
-        fs.rmdir('test/tmp')
-        .then(() => fs.mkdirp('test/tmp/init-no-git'))
+        fs.mkdirp('test/tmp/init-no-git')
         .then(() => opencollab.init('test/tmp/init-no-git'))        
         .then(result => {
             assert.fail()

@@ -1,22 +1,53 @@
-var assert = require('assert')
-var opencollab = require('../public/index')
+let assert = require('assert')
+let opencollab = require('../public/index')
 let fs = require('fs-extra')
 let { expect } = require('chai')
 
 describe('newIssue', () => {
+
+  before(done => {
+    fs.remove('test/tmp')
+    .then(() => fs.mkdirp('test/tmp'))
+    .then(() => done())
+  })
     
-  it("should return the issue", done => {
-    fs.mkdirp('test/tmp/new-issue1/.git')
-    .then(() => opencollab.init('test/tmp/new-issue1', 'test repo for new issue', "description"))    
+  it("should throw if no .git folder is found", done => {
+    fs.mkdirp('test/tmp/new-issue1')
     .then(() => opencollab.newIssue('test/tmp/new-issue1', 'test123432\n'))
-    .then(issue => {
-        console.log(issue)
+    .then(() => {
+        assert.fail()
+        done()
+    })
+    .catch(e => {
+        done()
+    })        
+  })
+
+  it("should throw if the OpenCollab repo is not initialized", done => {
+    fs.mkdirp('test/tmp/new-issue2/.git')
+    .then(() => opencollab.newIssue('test/tmp/new-issue2', 'test123432\n'))
+    .then(() => {
+      assert.fail()
+      done()
+    })
+    .catch(e => {
+        done()
+    })     
+  })  
+
+  it("should create exactly one new issue", done => {
+    fs.mkdirp('test/tmp/new-issue3/.git')
+    .then(() => opencollab.init('test/tmp/new-issue3', 'test repo for new issue', "description"))    
+    .then(() => opencollab.newIssue('test/tmp/new-issue3', 'test123432\n'))
+    .then(() => opencollab.issues('test/tmp/new-issue3'))
+    .then(issues => {
+        expect(issues.length).to.equal(1)
         done()
     })
     .catch(e => {
         assert.fail()
         done()
     })        
-  })
+  })    
    
 })

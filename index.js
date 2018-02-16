@@ -59,7 +59,7 @@ function init(directory, name, description) {
 }
 
 /**
- * Check the status of a Mango repository
+ * Check the status of an OpenCollab repository
  * @param {string} directory 
  */
 async function status(directory) {
@@ -82,30 +82,37 @@ async function status(directory) {
 
 
 /**
- * List issues for a Mango repository
+ * List issues for an OpenCollab repository
  * @param {string} directory 
  */
 function issues(directory) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
     .then(values => mangoIssues(values[0], values[1]))
-    .catch(err => console.error(err))
 }
 
 
-function getIssue(directory, issue) {
+/**
+ * Get an issue for an OpenCollab repository
+ * @param {string} directory 
+ * @param {number} issueId
+ */
+function getIssue(directory, issueId) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoGetIssue(values[0], values[1], issue))
-    .catch(err => console.error(err))
+    .then(values => mangoGetIssue(values[0], values[1], issueId))
 }
 
 
+/**
+ * Create a new issue for an OpenCollab repository
+ * @param {string} directory 
+ * @param {string} issueContent 
+ */
 function newIssue(directory, issueContent) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
     .then(values => mangoNewIssue(values[0], values[1], issueContent))
-    .catch(err => console.error(err))
 }
 
 module.exports = {
