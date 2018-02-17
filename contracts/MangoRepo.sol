@@ -166,9 +166,11 @@ contract MangoRepo is SafeMath {
     _;
   }
 
-  function MangoRepo(string _name, string _description) {
+  function MangoRepo(string _name, string _description, uint _voterRewardPercentage, uint _voterPenaltyPercentage) {
     name = _name;
     description = _description;
+    voterRewardPercentage = _voterRewardPercentage;
+    voterPenaltyPercentage = _voterPenaltyPercentage;
     maintainers[msg.sender] = true;
     maintainerAddresses.push(msg.sender);
     token = new OpenCollabToken(address(this));
