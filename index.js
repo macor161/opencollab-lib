@@ -51,11 +51,21 @@ function getAccount() {
 /**
  * Initialize an OpenCollab repo at a specified directory path
  * @param {string} directory 
+ * @param {string} opts.name 
+ * @param {string} opts.description
+ * @param {number} opts.voterRewardPercentage
+ * @param {number} opts.voterPenaltyPercentage
  */
-function init(directory, name, description) {
+function init(directory, opts) {
+  
+  const defaultParams = {
+    voterRewardPercentage: 5,
+    voterPenaltyPercentage: 20
+  }
+
   return ensureGitRepo(directory)
           .then(() => getAccount())
-          .then(account => mangoInit(account, directory, name, description))
+          .then(account => mangoInit(account, directory, Object.assign(opts, defaultParams)))
 }
 
 /**
