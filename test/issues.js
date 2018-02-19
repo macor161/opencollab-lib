@@ -38,7 +38,7 @@ describe('issues', () => {
 
   it("should return an array of issues", done => {
     fs.mkdirp('test/tmp/issues3/.git')
-    .then(() => opencollab.init('test/tmp/issues3', 'test repo for new issue', "description"))    
+    .then(() => opencollab.init('test/tmp/issues3', { name: 'test repo', description: 'this is description' }))    
     .then(() => opencollab.newIssue('test/tmp/issues3', 'test123432\n'))    
     .then(() => opencollab.issues('test/tmp/issues3'))
     .then(issues => {

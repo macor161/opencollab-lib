@@ -39,7 +39,7 @@ describe('getIssue', () => {
 
   it("should throw if issue id does not exist", done => {
     fs.mkdirp('test/tmp/get-issue3/.git')
-    .then(() => opencollab.init('test/tmp/get-issue3', 'test repo for new issue', "description"))    
+    .then(() => opencollab.init('test/tmp/get-issue3', { name: 'test repo', description: 'this is description' }))    
     .then(() => opencollab.getIssue('test/tmp/get-issue3', 0))    
     .then(() => {        
       assert.fail()

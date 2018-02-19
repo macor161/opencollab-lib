@@ -37,7 +37,7 @@ describe('newIssue', () => {
 
   it("should create exactly one new issue", done => {
     fs.mkdirp('test/tmp/new-issue3/.git')
-    .then(() => opencollab.init('test/tmp/new-issue3', 'test repo for new issue', "description"))    
+    .then(() => opencollab.init('test/tmp/new-issue3', { name: 'test repo', description: 'this is description' }))    
     .then(() => opencollab.newIssue('test/tmp/new-issue3', 'test123432\n'))
     .then(() => opencollab.issues('test/tmp/new-issue3'))
     .then(issues => {

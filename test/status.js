@@ -21,7 +21,7 @@ describe('status', () => {
         const description = 'test description'
 
         fs.mkdirp('test/tmp/status1/.git')
-        .then(() => opencollab.init('test/tmp/status1', name, description))
+        .then(() => opencollab.init('test/tmp/status1', { name, description }))
         .then(() => opencollab.status('test/tmp/status1'))
         .then(status => {
             expect(status.name).to.equal(name)
