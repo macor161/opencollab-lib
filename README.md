@@ -46,8 +46,8 @@ Below is a list of opencollab functionalities and their current state.
 | issues                |   ✔   |  ✔    |
 | get-issue             |   ✔   | WIP   |
 | new-issue             |   ✔   | WIP   |
-| edit-issue            |   x   |  x    |
-| delete-issue          |   x   |  x    |
+| edit-issue (update-issue)  |   ✔   |  x    |
+| delete-issue          |   ✔   |  x    |
 | fork                  |   x   |  x    |
 | merge-fork            |   x   |  x    |
 | pull-requests         |   x   |  x    |

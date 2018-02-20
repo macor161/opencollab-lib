@@ -9,7 +9,7 @@ describe('getIssue', () => {
   before(done => {
     fs.remove('test/tmp')
     .then(() => fs.mkdirp('test/tmp'))
-    .then(() => done())
+    .then(() => setTimeout(done, 3000))
   }) 
 
 
@@ -59,6 +59,7 @@ describe('getIssue', () => {
     .then(() => opencollab.getIssue('test/tmp/get-issue4', 0))
     .then(issue => {
         expect(issue).to.be.a('string')
+        expect(issue).to.be.equal(issueContent)
         done()
     })
     .catch(e => {

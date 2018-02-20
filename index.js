@@ -6,11 +6,8 @@ import Web3 from 'web3'
 
 import { ensureGitRepo } from './lib/ensure-git-repo'
 import { default as initLib } from './lib/init-lib'
-import IssueEditor from './lib/issueEditor'
-import Swarm from 'swarm-js'
-import { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoNewIssue } from './lib/mango'
+import { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue } from './lib/mango'
 
-const swarm = Swarm.at('http://swarm-gateways.net')
 
 const RPC_HOST = 'localhost'
 const RPC_PORT = '8545'
@@ -110,7 +107,7 @@ function issues(directory) {
 function getIssue(directory, issueId) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoGetIssue(values[0], values[1], issueId))
+    .then(values => mangoGetIssueIpfs(values[0], values[1], issueId))
 }
 
 
@@ -122,7 +119,32 @@ function getIssue(directory, issueId) {
 function newIssue(directory, issueContent) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoNewIssue(values[0], values[1], issueContent))
+    .then(values => mangoNewIssueIpfs(values[0], values[1], issueContent))
+}
+
+
+/**
+ * Update a new issue for an OpenCollab repository
+ * @param {string} directory 
+ * @param {number} issueId
+ * @param {string} newIssueContent 
+ */
+function updateIssue(directory, issueId, newIssueContent) {
+  return ensureMangoRepo(directory)
+    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(values => mangoUpdateIssueIpfs(values[0], values[1], issueId, newIssueContent))
+}
+
+
+/**
+ * Delete an issue for an OpenCollab repository
+ * @param {string} directory 
+ * @param {number} issueId
+ */
+function deleteIssue(directory, issueId) {
+  return ensureMangoRepo(directory)
+    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(values => mangoDeleteIssue(values[0], values[1], issueId))
 }
 
 module.exports = {
@@ -130,5 +152,7 @@ module.exports = {
   status,
   issues,
   getIssue,
-  newIssue
+  newIssue,
+  updateIssue,
+  deleteIssue
 }

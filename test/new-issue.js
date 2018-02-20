@@ -8,7 +8,7 @@ describe('newIssue', () => {
   before(done => {
     fs.remove('test/tmp')
     .then(() => fs.mkdirp('test/tmp'))
-    .then(() => done())
+    .then(() => setTimeout(done, 3000))
   })
     
   it("should throw if no .git folder is found", done => {
