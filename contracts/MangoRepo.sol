@@ -21,11 +21,12 @@ import "./OpenCollabToken.sol";
 import "./SafeMath.sol";
 
 
+
 contract MangoRepo is SafeMath {
   bool public obsolete;
 
-  string name;
-  string description;
+  string public name;
+  string public description;
 
   // Token address
   OpenCollabToken public token;
@@ -71,6 +72,7 @@ contract MangoRepo is SafeMath {
   mapping (string => string) refs;
 
   string[] snapshots;
+
 
   struct Issue {
     uint id;                                 // Issue id
@@ -133,6 +135,7 @@ contract MangoRepo is SafeMath {
   Issue[] issues;
   PullRequest[] pullRequests;
 
+  // Only maintainer can call functions with this modifier
   modifier maintainerOnly {
     if (!maintainers[msg.sender]) throw;
     _;
@@ -156,11 +159,13 @@ contract MangoRepo is SafeMath {
     _;
   }
 
+  // Only an issue creator or a maintainer can call functions with this modifier
   modifier issuePermissions(uint id) {
     if (issues[id].creator != msg.sender && !maintainers[msg.sender]) throw;
     _;
   }
 
+  // Only a pull request creator or a maintainer can call functions with this modifier
   modifier pullRequestPermissions(uint id) {
     if (pullRequests[id].creator != msg.sender && !maintainers[msg.sender]) throw;
     _;
@@ -169,12 +174,27 @@ contract MangoRepo is SafeMath {
   function MangoRepo(string _name, string _description, uint _voterRewardPercentage, uint _voterPenaltyPercentage) {
     name = _name;
     description = _description;
-    voterRewardPercentage = _voterRewardPercentage;
-    voterPenaltyPercentage = _voterPenaltyPercentage;
+
     maintainers[msg.sender] = true;
     maintainerAddresses.push(msg.sender);
-    token = new OpenCollabToken(address(this));
     obsolete = false;
+    token = new OpenCollabToken(address(this));
+
+    maintainerPercentage = 50;
+    voterRewardPercentage = _voterRewardPercentage;
+    voterPenaltyPercentage = _voterPenaltyPercentage;
+
+    voterDeposit = 1000000000000000000;
+    maintainerStake = 1000000000000000000;
+    contributorStake = 1000000000000000000;
+    challengerStake = 1000000000000000000;
+
+    reviewPeriodLength = 1 days;
+    votingCommitPeriodLength = 1 days;
+    votingRevealPeriodLength = 1 days;
+
+    // Initial token distribution
+    token.mint(msg.sender, 60000000000000000000);
   }
 
   function refCount() constant returns (uint) {
