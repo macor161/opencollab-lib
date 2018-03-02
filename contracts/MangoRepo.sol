@@ -171,7 +171,10 @@ contract MangoRepo is SafeMath {
     _;
   }
 
-  function MangoRepo(string _name, string _description, uint _voterRewardPercentage, uint _voterPenaltyPercentage) {
+  function MangoRepo(string _name, string _description, uint _maintainerPercentage, uint _voterRewardPercentage, uint _voterPenaltyPercentage,
+    uint _voterDeposit, uint _maintainerStake, uint _contributorStake, uint _challengerStake, uint _reviewPeriodLength, uint _votingCommitPeriodLength,
+    uint _votingRevealPeriodLength, uint _tokenCount) {
+
     name = _name;
     description = _description;
 
@@ -180,21 +183,21 @@ contract MangoRepo is SafeMath {
     obsolete = false;
     token = new OpenCollabToken(address(this));
 
-    maintainerPercentage = 50;
+    maintainerPercentage = _maintainerPercentage;
     voterRewardPercentage = _voterRewardPercentage;
     voterPenaltyPercentage = _voterPenaltyPercentage;
 
-    voterDeposit = 1000000000000000000;
-    maintainerStake = 1000000000000000000;
-    contributorStake = 1000000000000000000;
-    challengerStake = 1000000000000000000;
+    voterDeposit = _voterDeposit;
+    maintainerStake = _maintainerStake;
+    contributorStake = _contributorStake;
+    challengerStake = _challengerStake;
 
-    reviewPeriodLength = 1 days;
-    votingCommitPeriodLength = 1 days;
-    votingRevealPeriodLength = 1 days;
+    reviewPeriodLength = _reviewPeriodLength;
+    votingCommitPeriodLength = _votingCommitPeriodLength;
+    votingRevealPeriodLength = _votingRevealPeriodLength;
 
     // Initial token distribution
-    token.mint(msg.sender, 60000000000000000000);
+    token.mint(msg.sender, _tokenCount);
   }
 
   function refCount() constant returns (uint) {

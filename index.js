@@ -50,14 +50,32 @@ function getAccount() {
  * @param {string} directory 
  * @param {string} opts.name 
  * @param {string} opts.description
+ * @param {number} opts.maintainerPercentage
  * @param {number} opts.voterRewardPercentage
  * @param {number} opts.voterPenaltyPercentage
+ * @param {number} opts.voterDeposit
+ * @param {number} opts.maintainerStake
+ * @param {number} opts.contributorStake
+ * @param {number} opts.challengerStake
+ * @param {number} opts.reviewPeriodLength
+ * @param {number} opts.votingCommitPeriodLength
+ * @param {number} opts.votingRevealPeriodLength
+ * @param {number} opts.tokenCount
  */
 function init(directory, opts) {
   
   const defaultParams = {
+    maintainerPercentage: 50,
     voterRewardPercentage: 5,
-    voterPenaltyPercentage: 20
+    voterPenaltyPercentage: 20,
+    voterDeposit: 1000000000000000000,
+    maintainerStake: 1000000000000000000,
+    contributorStake: 1000000000000000000,
+    challengerStake: 1000000000000000000,
+    reviewPeriodLength: 24 * 60 * 60, // 1 day
+    votingCommitPeriodLength: 24 * 60 * 60, // 1 day
+    votingRevealPeriodLength: 24 * 60 * 60, // 1 day
+    tokenCount: 60000000000000000000
   }
 
   return ensureGitRepo(directory)
