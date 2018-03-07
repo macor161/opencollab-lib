@@ -1,5 +1,5 @@
 let assert = require('assert')
-let opencollab = require('../public/index')
+let opencollab = require('../index')
 let fs = require('fs-extra')
 var chai = require('chai')
 
