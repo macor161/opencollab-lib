@@ -1,12 +1,12 @@
-import mkdirp from 'mkdirp'
-import fs from 'fs-extra'
-import path from 'path'
-import shell from 'shelljs'
-import Web3 from 'web3'
+let mkdirp = require('mkdirp')
+let fs = require('fs-extra')
+let path = require('path')
+let shell = require('shelljs')
+let Web3 = require('web3')
 
-import { ensureGitRepo } from './lib/ensure-git-repo'
-import { default as initLib } from './lib/init-lib'
-import { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue } from './lib/mango'
+let { ensureGitRepo } = require('./lib/ensure-git-repo')
+let initLib = require('./lib/init-lib')
+let { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue } = require('./lib/mango')
 
 
 const RPC_HOST = 'localhost'
