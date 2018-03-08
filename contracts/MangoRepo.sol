@@ -301,6 +301,39 @@ contract MangoRepo is SafeMath {
     issues[id].active = false;
   }
 
+  /*
+   * Stake tokens to an issue as a curator
+   * @param id Issue id
+   * @param stake The amount of OCT to stake
+   */
+  function stakeIssue(uint id, uint stake) validIssue(id) returns (bool success) {
+
+    token.transferFrom(msg.sender, this, stake);
+
+    issues[id].stakedTokens[msg.sender] = safeAdd(issues[id].stakedTokens[msg.sender], stake);
+
+    issues[id].totalStake = safeAdd(issues[id].totalStake, stake);
+
+    return true;
+  }
+
+  /*
+   * Unbond tokens staked to an issue
+   * @param id Issue id
+   */
+  function withdrawIssueStake(uint id) returns (bool success) {
+
+    if (id >= issues.length || id < 0) throw;
+
+    if (issues[id].openPullRequest) throw;
+ 
+    if (issues[id].stakedTokens[msg.sender] == 0) throw;
+
+    token.transfer(msg.sender, issues[id].stakedTokens[msg.sender]);
+
+    delete issues[id].stakedTokens[msg.sender];
+  }
+
   function pullRequestCount() constant returns (uint count) {
     return pullRequests.length;
   }
