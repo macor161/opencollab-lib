@@ -297,11 +297,8 @@ contract MangoRepo is SafeMath {
     issues[id].hash = hash;
   }
 
-  function deleteIssue(uint id) issuePermissions(id) {
-    if (id >= issues.length || id < 0) throw;
-    if (bytes(issues[id].hash).length == 0) throw;
-
-    delete issues[id];
+  function closeIssue(uint id) validIssue(id) issuePermissions(id) {
+    issues[id].active = false;
   }
 
   function pullRequestCount() constant returns (uint count) {
