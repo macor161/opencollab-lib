@@ -6,7 +6,7 @@ let Web3 = require('web3')
 
 let { ensureGitRepo } = require('./lib/ensure-git-repo')
 let initLib = require('./lib/init-lib')
-let { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue } = require('./lib/mango')
+let { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue } = require('./lib/mango')
 
 
 const RPC_HOST = 'localhost'
@@ -125,19 +125,22 @@ function issues(directory) {
 function getIssue(directory, issueId) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoGetIssueIpfs(values[0], values[1], issueId))
+    //.then(values => mangoGetIssueIpfs(values[0], values[1], issueId))
+    .then(values => mangoGetIssue(values[0], values[1], issueId))
 }
 
 
 /**
  * Create a new issue for an OpenCollab repository
  * @param {string} directory 
+ * @param {string} name
+ * @param {string} description
  * @param {string} issueContent 
  */
-function newIssue(directory, issueContent) {
+function newIssue(directory, name, description, issueContent) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoNewIssueIpfs(values[0], values[1], issueContent))
+    .then(values => mangoNewIssueIpfs(values[0], values[1], name, description, issueContent))
 }
 
 

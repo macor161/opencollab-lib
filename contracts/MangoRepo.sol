@@ -76,6 +76,8 @@ contract MangoRepo is SafeMath {
 
   struct Issue {
     uint id;                                 // Issue id
+    string name;                             
+    string description;
     address creator;                         // Address of issue creator
     string hash;                             // Swarm hash of issue contents
     uint totalStake;                         // Total amount staked to this issue
@@ -261,24 +263,32 @@ contract MangoRepo is SafeMath {
     return issues.length;
   }
 
-  function getIssue(uint id) constant returns (string hash) {
-    if (id >= issues.length || id < 0) throw;
+  function getIssue(uint _id) constant returns (
+    string name, 
+    string description,
+    string hash,
+    uint totalStake,
+    bool openPullRequest,
+    uint pullRequestId,
+    bool active) 
+  {
 
-    if (bytes(issues[id].hash).length == 0) {
-      return '';
-    } else {
-      return issues[id].hash;
-    }
+    if (_id >= issues.length || _id < 0) 
+      throw;
+
+    return (issues[_id].name, issues[_id].description, issues[_id].hash, issues[_id].totalStake, issues[_id].openPullRequest, issues[_id].pullRequestId, issues[_id].active);
   }
 
   /**
    * Create new issue
    * @param hash Swarm hash of issue contents
    */
-  function newIssue(string hash) returns (bool success) {
+  function newIssue(string _name, string _description, string hash) returns (bool success) {
     Issue memory issue;
 
     issue.id = issues.length;
+    issue.name = _name;
+    issue.description = _description;
     issue.creator = msg.sender;
     issue.hash = hash;
     issue.totalStake = 0;
