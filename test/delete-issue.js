@@ -4,7 +4,7 @@ let fs = require('fs-extra')
 let { expect } = require('chai')
 
 
-describe('deleteIssue', () => {
+xdescribe('deleteIssue', () => {
     
   before(done => {
     fs.remove('test/tmp')

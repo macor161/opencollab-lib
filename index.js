@@ -158,6 +158,7 @@ function updateIssue(directory, issueId, newIssueContent) {
 
 
 /**
+ * @deprecated
  * Delete an issue for an OpenCollab repository
  * @param {string} directory 
  * @param {number} issueId

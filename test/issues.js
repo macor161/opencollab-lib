@@ -42,7 +42,6 @@ describe('issues', () => {
     .then(() => opencollab.newIssue('test/tmp/issues3', 'issue name', 'issue desc', 'test123432\n'))    
     .then(() => opencollab.issues('test/tmp/issues3'))
     .then(issues => {
-      console.log(issues)
         expect(issues).to.be.a('Array')
         expect(issues.length).to.equal(1)
         done()
