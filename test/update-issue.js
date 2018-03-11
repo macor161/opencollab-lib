@@ -16,7 +16,7 @@ describe('updateIssue', () => {
   it("should return the new hash for the issue", done => {
     fs.mkdirp('test/tmp/update-issue4/.git')
     .then(() => opencollab.init('test/tmp/update-issue4', { name: 'test repo', description: 'description' }))    
-    .then(() => opencollab.newIssue('test/tmp/update-issue4', 'test\n'))    
+    .then(() => opencollab.newIssue('test/tmp/update-issue4', 'name', 'description', 'test\n'))    
     .then(() => opencollab.updateIssue('test/tmp/update-issue4', 0, 'test updated\n'))
     .then(issue => {
         expect(issue).to.be.a('string')
