@@ -51,16 +51,19 @@ describe('getIssue', () => {
   })  
 
   it("should return the selected issue", done => {
+    const issueName = 'Issue name 1'
+    const issueDesc = 'Issue description 1.'
     const issueContent = 'test123432\n'
 
     fs.mkdirp('test/tmp/get-issue4/.git')
     .then(() => opencollab.init('test/tmp/get-issue4', { name: 'test repo', description: 'this is description' }))    
-    .then(() => opencollab.newIssue('test/tmp/get-issue4', issueContent))    
+    .then(() => opencollab.newIssue('test/tmp/get-issue4', issueName, issueDesc, issueContent))    
     .then(() => opencollab.getIssue('test/tmp/get-issue4', 0))
     .then(issue => {
-        expect(issue).to.be.a('string')
-        expect(issue).to.be.equal(issueContent)
-        done()
+      expect(issue.name).to.equal(issueName)
+      expect(issue.description).to.equal(issueDesc)
+      expect(issue.content).to.equal(issueContent)
+      done()
     })
     .catch(e => {
         console.log(e)
