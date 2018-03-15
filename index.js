@@ -62,7 +62,9 @@ function getAccount() {
  * @param {number} opts.votingRevealPeriodLength
  * @param {number} opts.tokenCount
  */
-function init(directory, opts) {
+function init(directory, opts = {}) {
+  if (!opts || !opts.name || !opts.description)
+    throw('Invalid options')
   
   const defaultParams = {
     maintainerPercentage: 50,
