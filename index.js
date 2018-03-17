@@ -80,7 +80,7 @@ function init(directory, opts) {
 
   return ensureGitRepo(directory)
           .then(() => getAccount())
-          .then(account => mangoInit(account, directory, Object.assign(opts, defaultParams)))
+          .then(account => mangoInit(account, directory, Object.assign(defaultParams, opts)))
 }
 
 /**
@@ -176,5 +176,6 @@ module.exports = {
   getIssue,
   newIssue,
   updateIssue,
-  deleteIssue
+  deleteIssue,
+  getAccount
 }
