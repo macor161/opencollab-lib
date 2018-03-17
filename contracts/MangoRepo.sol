@@ -480,4 +480,12 @@ contract MangoRepo is SafeMath {
       maintainerAddresses[uint(pos)] = address(0);
     }
   }
+
+
+  /**
+   * Token functions
+   */
+   function balanceOf(address owner) constant returns (uint balance) {
+     return token.balanceOf(owner);
+   }
 }
