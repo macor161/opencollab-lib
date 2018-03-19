@@ -283,7 +283,7 @@ contract MangoRepo is SafeMath {
    * Create new issue
    * @param hash Swarm hash of issue contents
    */
-  function newIssue(string _name, string _description, string hash) returns (bool success) {
+  function newIssue(string _name, string _description, string hash, bool _isActive) returns (bool success) {
     Issue memory issue;
 
     issue.id = issues.length;
@@ -294,7 +294,7 @@ contract MangoRepo is SafeMath {
     issue.totalStake = 0;
     issue.openPullRequest = false;
     issue.pullRequestId = 0;
-    issue.active = true;
+    issue.active = _isActive;
 
     issues.push(issue);
 

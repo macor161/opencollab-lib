@@ -171,14 +171,14 @@
     "absolutePath": "/home/mathew/workspace/opencollab/opencollab-lib/contracts/MangoRepoInterface.sol",
     "exportedSymbols": {
       "MangoRepoInterface": [
-        1452
+        1453
       ]
     },
-    "id": 1453,
+    "id": 1454,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1393,
+        "id": 1394,
         "literals": [
           "solidity",
           "^",
@@ -194,16 +194,16 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1452,
+        "id": 1453,
         "linearizedBaseContracts": [
-          1452
+          1453
         ],
         "name": "MangoRepoInterface",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": null,
-            "id": 1398,
+            "id": 1399,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -211,22 +211,22 @@
             "name": "repoInterfaceVersion",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1394,
+              "id": 1395,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1240:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1397,
+              "id": 1398,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1396,
+                  "id": 1397,
                   "name": "version",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1398,
+                  "scope": 1399,
                   "src": "1261:12:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -235,7 +235,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1395,
+                    "id": 1396,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1261:4:2",
@@ -250,7 +250,7 @@
               ],
               "src": "1260:14:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1211:64:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -258,7 +258,7 @@
           },
           {
             "body": null,
-            "id": 1403,
+            "id": 1404,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -266,22 +266,22 @@
             "name": "refCount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1399,
+              "id": 1400,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1298:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1402,
+              "id": 1403,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1401,
+                  "id": 1402,
                   "name": "count",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1403,
+                  "scope": 1404,
                   "src": "1319:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -290,7 +290,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1400,
+                    "id": 1401,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1319:4:2",
@@ -305,7 +305,7 @@
               ],
               "src": "1318:12:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1281:50:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -313,7 +313,7 @@
           },
           {
             "body": null,
-            "id": 1410,
+            "id": 1411,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -321,15 +321,15 @@
             "name": "refName",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1406,
+              "id": 1407,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1405,
+                  "id": 1406,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1410,
+                  "scope": 1411,
                   "src": "1353:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -338,7 +338,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1404,
+                    "id": 1405,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1353:4:2",
@@ -355,15 +355,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1409,
+              "id": 1410,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1408,
+                  "id": 1409,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1410,
+                  "scope": 1411,
                   "src": "1383:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -372,7 +372,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1407,
+                    "id": 1408,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1383:6:2",
@@ -387,7 +387,7 @@
               ],
               "src": "1382:12:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1336:59:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -395,7 +395,7 @@
           },
           {
             "body": null,
-            "id": 1417,
+            "id": 1418,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -403,15 +403,15 @@
             "name": "getRef",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1413,
+              "id": 1414,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1412,
+                  "id": 1413,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1417,
+                  "scope": 1418,
                   "src": "1416:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -420,7 +420,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1411,
+                    "id": 1412,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1416:6:2",
@@ -437,15 +437,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1416,
+              "id": 1417,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1415,
+                  "id": 1416,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1417,
+                  "scope": 1418,
                   "src": "1446:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -454,7 +454,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1414,
+                    "id": 1415,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1446:6:2",
@@ -469,7 +469,7 @@
               ],
               "src": "1445:13:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1400:59:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -477,7 +477,7 @@
           },
           {
             "body": null,
-            "id": 1424,
+            "id": 1425,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -485,15 +485,15 @@
             "name": "setRef",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1422,
+              "id": 1423,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1419,
+                  "id": 1420,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1424,
+                  "scope": 1425,
                   "src": "1480:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -502,7 +502,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1418,
+                    "id": 1419,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1480:6:2",
@@ -516,10 +516,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1421,
+                  "id": 1422,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1424,
+                  "scope": 1425,
                   "src": "1492:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -528,7 +528,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1420,
+                    "id": 1421,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1492:6:2",
@@ -545,12 +545,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1423,
+              "id": 1424,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1504:0:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1464:41:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -558,7 +558,7 @@
           },
           {
             "body": null,
-            "id": 1429,
+            "id": 1430,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -566,15 +566,15 @@
             "name": "deleteRef",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1427,
+              "id": 1428,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1426,
+                  "id": 1427,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1429,
+                  "scope": 1430,
                   "src": "1529:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -583,7 +583,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1425,
+                    "id": 1426,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1529:6:2",
@@ -600,12 +600,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1428,
+              "id": 1429,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1540:0:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1510:31:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -613,7 +613,7 @@
           },
           {
             "body": null,
-            "id": 1434,
+            "id": 1435,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -621,22 +621,22 @@
             "name": "snapshotCount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1430,
+              "id": 1431,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1569:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1433,
+              "id": 1434,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1432,
+                  "id": 1433,
                   "name": "count",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1434,
+                  "scope": 1435,
                   "src": "1590:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -645,7 +645,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1431,
+                    "id": 1432,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1590:4:2",
@@ -660,7 +660,7 @@
               ],
               "src": "1589:12:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1547:55:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -668,7 +668,7 @@
           },
           {
             "body": null,
-            "id": 1441,
+            "id": 1442,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -676,15 +676,15 @@
             "name": "getSnapshot",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1437,
+              "id": 1438,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1436,
+                  "id": 1437,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1441,
+                  "scope": 1442,
                   "src": "1628:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -693,7 +693,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1435,
+                    "id": 1436,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1628:4:2",
@@ -710,15 +710,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1440,
+              "id": 1441,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1439,
+                  "id": 1440,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1441,
+                  "scope": 1442,
                   "src": "1658:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -727,7 +727,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1438,
+                    "id": 1439,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1658:6:2",
@@ -742,7 +742,7 @@
               ],
               "src": "1657:13:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1607:64:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -750,7 +750,7 @@
           },
           {
             "body": null,
-            "id": 1446,
+            "id": 1447,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -758,15 +758,15 @@
             "name": "addSnapshot",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1444,
+              "id": 1445,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1443,
+                  "id": 1444,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1446,
+                  "scope": 1447,
                   "src": "1697:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -775,7 +775,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1442,
+                    "id": 1443,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1697:6:2",
@@ -792,12 +792,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1445,
+              "id": 1446,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1709:0:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1676:34:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -805,7 +805,7 @@
           },
           {
             "body": null,
-            "id": 1451,
+            "id": 1452,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -813,22 +813,22 @@
             "name": "isObsolete",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1447,
+              "id": 1448,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1735:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1450,
+              "id": 1451,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1449,
+                  "id": 1450,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1451,
+                  "scope": 1452,
                   "src": "1756:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -837,7 +837,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1448,
+                    "id": 1449,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1756:4:2",
@@ -852,14 +852,14 @@
               ],
               "src": "1755:6:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1716:46:2",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1453,
+        "scope": 1454,
         "src": "1177:587:2"
       }
     ],
@@ -869,14 +869,14 @@
     "absolutePath": "/home/mathew/workspace/opencollab/opencollab-lib/contracts/MangoRepoInterface.sol",
     "exportedSymbols": {
       "MangoRepoInterface": [
-        1452
+        1453
       ]
     },
-    "id": 1453,
+    "id": 1454,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1393,
+        "id": 1394,
         "literals": [
           "solidity",
           "^",
@@ -892,16 +892,16 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1452,
+        "id": 1453,
         "linearizedBaseContracts": [
-          1452
+          1453
         ],
         "name": "MangoRepoInterface",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": null,
-            "id": 1398,
+            "id": 1399,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -909,22 +909,22 @@
             "name": "repoInterfaceVersion",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1394,
+              "id": 1395,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1240:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1397,
+              "id": 1398,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1396,
+                  "id": 1397,
                   "name": "version",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1398,
+                  "scope": 1399,
                   "src": "1261:12:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -933,7 +933,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1395,
+                    "id": 1396,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1261:4:2",
@@ -948,7 +948,7 @@
               ],
               "src": "1260:14:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1211:64:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -956,7 +956,7 @@
           },
           {
             "body": null,
-            "id": 1403,
+            "id": 1404,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -964,22 +964,22 @@
             "name": "refCount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1399,
+              "id": 1400,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1298:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1402,
+              "id": 1403,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1401,
+                  "id": 1402,
                   "name": "count",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1403,
+                  "scope": 1404,
                   "src": "1319:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -988,7 +988,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1400,
+                    "id": 1401,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1319:4:2",
@@ -1003,7 +1003,7 @@
               ],
               "src": "1318:12:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1281:50:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -1011,7 +1011,7 @@
           },
           {
             "body": null,
-            "id": 1410,
+            "id": 1411,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1019,15 +1019,15 @@
             "name": "refName",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1406,
+              "id": 1407,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1405,
+                  "id": 1406,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1410,
+                  "scope": 1411,
                   "src": "1353:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1036,7 +1036,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1404,
+                    "id": 1405,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1353:4:2",
@@ -1053,15 +1053,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1409,
+              "id": 1410,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1408,
+                  "id": 1409,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1410,
+                  "scope": 1411,
                   "src": "1383:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1070,7 +1070,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1407,
+                    "id": 1408,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1383:6:2",
@@ -1085,7 +1085,7 @@
               ],
               "src": "1382:12:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1336:59:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -1093,7 +1093,7 @@
           },
           {
             "body": null,
-            "id": 1417,
+            "id": 1418,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1101,15 +1101,15 @@
             "name": "getRef",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1413,
+              "id": 1414,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1412,
+                  "id": 1413,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1417,
+                  "scope": 1418,
                   "src": "1416:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1118,7 +1118,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1411,
+                    "id": 1412,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1416:6:2",
@@ -1135,15 +1135,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1416,
+              "id": 1417,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1415,
+                  "id": 1416,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1417,
+                  "scope": 1418,
                   "src": "1446:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1152,7 +1152,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1414,
+                    "id": 1415,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1446:6:2",
@@ -1167,7 +1167,7 @@
               ],
               "src": "1445:13:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1400:59:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -1175,7 +1175,7 @@
           },
           {
             "body": null,
-            "id": 1424,
+            "id": 1425,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -1183,15 +1183,15 @@
             "name": "setRef",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1422,
+              "id": 1423,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1419,
+                  "id": 1420,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1424,
+                  "scope": 1425,
                   "src": "1480:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1200,7 +1200,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1418,
+                    "id": 1419,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1480:6:2",
@@ -1214,10 +1214,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1421,
+                  "id": 1422,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1424,
+                  "scope": 1425,
                   "src": "1492:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1226,7 +1226,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1420,
+                    "id": 1421,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1492:6:2",
@@ -1243,12 +1243,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1423,
+              "id": 1424,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1504:0:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1464:41:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1256,7 +1256,7 @@
           },
           {
             "body": null,
-            "id": 1429,
+            "id": 1430,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -1264,15 +1264,15 @@
             "name": "deleteRef",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1427,
+              "id": 1428,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1426,
+                  "id": 1427,
                   "name": "ref",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1429,
+                  "scope": 1430,
                   "src": "1529:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1281,7 +1281,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1425,
+                    "id": 1426,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1529:6:2",
@@ -1298,12 +1298,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1428,
+              "id": 1429,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1540:0:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1510:31:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1311,7 +1311,7 @@
           },
           {
             "body": null,
-            "id": 1434,
+            "id": 1435,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1319,22 +1319,22 @@
             "name": "snapshotCount",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1430,
+              "id": 1431,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1569:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1433,
+              "id": 1434,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1432,
+                  "id": 1433,
                   "name": "count",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1434,
+                  "scope": 1435,
                   "src": "1590:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1343,7 +1343,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1431,
+                    "id": 1432,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1590:4:2",
@@ -1358,7 +1358,7 @@
               ],
               "src": "1589:12:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1547:55:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -1366,7 +1366,7 @@
           },
           {
             "body": null,
-            "id": 1441,
+            "id": 1442,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1374,15 +1374,15 @@
             "name": "getSnapshot",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1437,
+              "id": 1438,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1436,
+                  "id": 1437,
                   "name": "index",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1441,
+                  "scope": 1442,
                   "src": "1628:10:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1391,7 +1391,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1435,
+                    "id": 1436,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1628:4:2",
@@ -1408,15 +1408,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1440,
+              "id": 1441,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1439,
+                  "id": 1440,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1441,
+                  "scope": 1442,
                   "src": "1658:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1425,7 +1425,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1438,
+                    "id": 1439,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1658:6:2",
@@ -1440,7 +1440,7 @@
               ],
               "src": "1657:13:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1607:64:2",
             "stateMutability": "view",
             "superFunction": null,
@@ -1448,7 +1448,7 @@
           },
           {
             "body": null,
-            "id": 1446,
+            "id": 1447,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -1456,15 +1456,15 @@
             "name": "addSnapshot",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1444,
+              "id": 1445,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1443,
+                  "id": 1444,
                   "name": "hash",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1446,
+                  "scope": 1447,
                   "src": "1697:11:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1473,7 +1473,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 1442,
+                    "id": 1443,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1697:6:2",
@@ -1490,12 +1490,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 1445,
+              "id": 1446,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1709:0:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1676:34:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1503,7 +1503,7 @@
           },
           {
             "body": null,
-            "id": 1451,
+            "id": 1452,
             "implemented": false,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1511,22 +1511,22 @@
             "name": "isObsolete",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1447,
+              "id": 1448,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1735:2:2"
             },
             "payable": false,
             "returnParameters": {
-              "id": 1450,
+              "id": 1451,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1449,
+                  "id": 1450,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1451,
+                  "scope": 1452,
                   "src": "1756:4:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1535,7 +1535,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1448,
+                    "id": 1449,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1756:4:2",
@@ -1550,14 +1550,14 @@
               ],
               "src": "1755:6:2"
             },
-            "scope": 1452,
+            "scope": 1453,
             "src": "1716:46:2",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1453,
+        "scope": 1454,
         "src": "1177:587:2"
       }
     ],
@@ -1569,5 +1569,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-18T20:52:10.469Z"
+  "updatedAt": "2018-03-19T14:38:33.625Z"
 }

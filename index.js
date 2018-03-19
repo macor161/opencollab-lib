@@ -138,11 +138,12 @@ function getIssue(directory, issueId) {
  * @param {string} name
  * @param {string} description
  * @param {string} issueContent 
+ * @param {bool} isActive
  */
-function newIssue(directory, name, description, issueContent) {
+function newIssue(directory, name, description, issueContent, isActive = true) {
   return ensureMangoRepo(directory)
     .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoNewIssueIpfs(values[0], values[1], name, description, issueContent))
+    .then(values => mangoNewIssueIpfs(values[0], values[1], name, description, issueContent, isActive))
 }
 
 
