@@ -317,8 +317,8 @@ contract MangoRepo is SafeMath {
    * @param stake The amount of OCT to stake
    */
   function stakeIssue(uint id, uint stake) validIssue(id) returns (bool success) {
-
-    token.transferFrom(msg.sender, this, stake);
+    
+    token.transferFrom(msg.sender, address(this), stake);
 
     issues[id].stakedTokens[msg.sender] = safeAdd(issues[id].stakedTokens[msg.sender], stake);
 

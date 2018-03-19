@@ -6,7 +6,7 @@ let Web3 = require('web3')
 
 let { ensureGitRepo } = require('./lib/ensure-git-repo')
 let initLib = require('./lib/init-lib')
-let { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue } = require('./lib/mango')
+let { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue, mangoStakeIssue } = require('./lib/mango')
 
 
 const RPC_HOST = 'localhost'
@@ -169,6 +169,13 @@ function deleteIssue(directory, issueId) {
     .then(values => mangoDeleteIssue(values[0], values[1], issueId))
 }
 
+
+function stakeIssue(directory, issueId, stake) {
+  return ensureMangoRepo(directory)
+    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(values => mangoStakeIssue(values[0], values[1], issueId, stake))
+}
+
 module.exports = {
   init,
   status,
@@ -177,5 +184,6 @@ module.exports = {
   newIssue,
   updateIssue,
   deleteIssue,
+  stakeIssue,
   getAccount
 }

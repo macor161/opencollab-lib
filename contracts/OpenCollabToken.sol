@@ -61,12 +61,13 @@ contract OpenCollabToken is ERC20, SafeMath {
 
     balances[to] = safeAdd(balances[to], value);
     balances[from] = safeSub(balances[from], value);
-    allowed[from][msg.sender] = safeSub(allowance, value); // safeSub throws if value > allowance, rolling everything back
+    //allowed[from][msg.sender] = safeSub(allowance, value); // safeSub throws if value > allowance, rolling everything back
 
     Transfer(from, to, value);
 
     return true;
   }
+
 
   function balanceOf(address owner) constant returns (uint balance) {
     return balances[owner];
