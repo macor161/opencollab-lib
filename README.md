@@ -1,18 +1,17 @@
 # OpenCollab Library
 
-`opencollab-lib` is a library port of [opencollab-cli](https://github.com/yondonfu/opencollab-cli). It can be used in any NodeJs or Electron app.
+`opencollab-lib` is a library based on Yondon Fu's [opencollab](https://github.com/yondonfu/opencollab). It can be used in any NodeJs or Electron app.
 
 # Install
 
-Three dependencies are currently needed to use the frontend: 
+Two dependencies are currently needed to use the library: 
 * [TestRPC](https://github.com/ethereumjs/testrpc) for the Ethereum RPC client
 * [ipfs](https://www.npmjs.com/package/ipfs) for the IPFS node
-* [opencollab-cli](https://github.com/macor161/opencollab-cli) to handle the `mango://` protocol. 
 
 Then run `npm install`.
 
 ```
-npm install -g ethereumjs-testrpc ipfs opencollab-cli
+npm install -g ethereumjs-testrpc ipfs
 npm install
 ```
 
