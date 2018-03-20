@@ -7,12 +7,12 @@
 Three dependencies are currently needed to use the frontend: 
 * [TestRPC](https://github.com/ethereumjs/testrpc) for the Ethereum RPC client
 * [ipfs](https://www.npmjs.com/package/ipfs) for the IPFS node
-* [git-remote-mango](https://github.com/macor161/git-mango-helper) to handle the `mango://` protocol. 
+* [opencollab-cli](https://github.com/macor161/opencollab-cli) to handle the `mango://` protocol. 
 
 Then run `npm install`.
 
 ```
-npm install -g ethereumjs-testrpc ipfs git-mango-helper
+npm install -g ethereumjs-testrpc ipfs opencollab-cli
 npm install
 ```
 
