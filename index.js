@@ -1,46 +1,32 @@
-let mkdirp = require('mkdirp')
-let fs = require('fs-extra')
-let path = require('path')
-let shell = require('shelljs')
-let Web3 = require('web3')
+const path = require('path')
+const shell = require('shelljs')
+const Web3 = require('web3')
 
-let { ensureGitRepo } = require('./lib/ensure-git-repo')
-let initLib = require('./lib/init-lib')
-let { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue, mangoStakeIssue } = require('./lib/mango')
+const { getDefaultAccount } = require('./lib/web3-helpers')
+const { ensureGitRepo } = require('./lib/ensure-git-repo')
+const initLib = require('./lib/init-lib')
+const { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue, mangoStakeIssue } = require('./lib/mango')
 
-
-const RPC_HOST = 'localhost'
-const RPC_PORT = '8545'
-
-const CONTRACT_DIR = '.mango/contract/'
-const ISSUES_DIR = '.mango/issues/'
-
-let argv = {
-  host: RPC_HOST,
-  port: RPC_PORT
+const defaultParams = {
+  web3Host: 'localhost',
+  web3Port: 8545
 }
 
 
 
 
-function getAccount() {
-  const { host, port } = argv
 
-  const provider = new Web3.providers.HttpProvider(`http:\/\/${host}:${port}`)
-  const web3 = new Web3(provider)
 
-  return new Promise((resolve, reject) => {
-    web3.eth.getAccounts((err, accounts) => {
-      if (err != null) {
-        reject(err);
-      } else {
-        resolve(accounts[0])
-      }
-    })
-  })
+
+class OpenCollab {
+
+  constructor(opts = {}) {
+    this._opts = Object.assign(defaultParams, opts)
+    this._web3 = new Web3(new Web3.providers.HttpProvider(`http:\/\/${opts.web3Host}:${web3Port}`))
+    this._account = getDefaultAccount(this._web3)
+  }
+
 }
-
-
 
 
 
@@ -81,7 +67,7 @@ function init(directory, opts = {}) {
   }
 
   return ensureGitRepo(directory)
-          .then(() => getAccount())
+          .then(() => getDefaultAccount())
           .then(account => mangoInit(account, directory, Object.assign(defaultParams, opts)))
 }
 
@@ -91,7 +77,7 @@ function init(directory, opts = {}) {
  */
 async function status(directory) {
   await ensureMangoRepo(directory)
-  let values = await Promise.all([getMangoAddress(directory), getAccount()])
+  let values = await Promise.all([getMangoAddress(directory), getDefaultAccount()])
   let status = Object.assign({ mangoAddress: values[0], name: path.basename(directory).replace('.git', '') }, await mangoStatus(values[0], values[1]))
   
   let repoInfo = await Promise.all([ 
@@ -114,7 +100,7 @@ async function status(directory) {
  */
 function issues(directory) {
   return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
     .then(values => mangoIssues(values[0], values[1]))
 }
 
@@ -126,7 +112,7 @@ function issues(directory) {
  */
 function getIssue(directory, issueId) {
   return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
     //.then(values => mangoGetIssueIpfs(values[0], values[1], issueId))
     .then(values => mangoGetIssue(values[0], values[1], issueId))
 }
@@ -142,7 +128,7 @@ function getIssue(directory, issueId) {
  */
 function newIssue(directory, name, description, issueContent, isActive = true) {
   return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
     .then(values => mangoNewIssueIpfs(values[0], values[1], name, description, issueContent, isActive))
 }
 
@@ -155,7 +141,7 @@ function newIssue(directory, name, description, issueContent, isActive = true) {
  */
 function updateIssue(directory, issueId, newIssueContent) {
   return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
     .then(values => mangoUpdateIssueIpfs(values[0], values[1], issueId, newIssueContent))
 }
 
@@ -168,14 +154,14 @@ function updateIssue(directory, issueId, newIssueContent) {
  */
 function deleteIssue(directory, issueId) {
   return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
     .then(values => mangoDeleteIssue(values[0], values[1], issueId))
 }
 
 
 function stakeIssue(directory, issueId, stake) {
   return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
+    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
     .then(values => mangoStakeIssue(values[0], values[1], issueId, stake))
 }
 
@@ -188,5 +174,5 @@ module.exports = {
   updateIssue,
   deleteIssue,
   stakeIssue,
-  getAccount
+  getDefaultAccount
 }
