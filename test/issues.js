@@ -47,6 +47,7 @@ describe('issues', () => {
         done()
     })
     .catch(e => {
+        console.log(e)
         assert.fail()
         done()
     })        
