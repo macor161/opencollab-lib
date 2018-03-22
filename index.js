@@ -209,7 +209,11 @@ class OpenCollab {
     return mangoRepoLib.setIssue(issueId, node.toJSON().multihash)
   }
 
-
+  /**
+   * Stake tokens to an issue
+   * @param {number} issueId 
+   * @param {number} stake 
+   */
   async stakeIssue(issueId, stake) {
     await this._init()
 
