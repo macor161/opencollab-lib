@@ -3,95 +3,149 @@ const shell = require('shelljs')
 const Web3 = require('web3')
 
 const { getDefaultAccount } = require('./lib/web3-helpers')
-const { ensureGitRepo } = require('./lib/ensure-git-repo')
+const { isOpenCollabRepo } = require('./lib/validation')
+const common = require('./lib/common')
 const initLib = require('./lib/init-lib')
 const { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue, mangoStakeIssue } = require('./lib/mango')
-
-const defaultParams = {
-  web3Host: 'localhost',
-  web3Port: 8545
-}
-
-
-
-
 
 
 
 class OpenCollab {
 
-  constructor(opts = {}) {
+  /**
+   * Creates a new OpenCollab object based on a repository path
+   * 
+   * @param {string} repoPath
+   * @param {string} [opts.web3Host = 'localhost']
+   * @param {number} [opts.web3Port = 8545]
+   */
+  constructor(repoPath, opts = {}) {
+    const defaultParams = {
+      web3Host: 'localhost',
+      web3Port: 8545
+    }
+
+    this._repoPath = repoPath
     this._opts = Object.assign(defaultParams, opts)
-    this._web3 = new Web3(new Web3.providers.HttpProvider(`http:\/\/${opts.web3Host}:${web3Port}`))
-    this._account = getDefaultAccount(this._web3)
+    this._web3 = new Web3(new Web3.providers.HttpProvider(`http:\/\/${this._opts.web3Host}:${this._opts.web3Port}`))
+    this._isInitialized = false
+
+    this._init()
   }
 
-}
+  /**
+   * Initialize inner state of object.
+   */
+  async _init() {
+    if (!this._isInitialized) {
 
+      this._account = await getDefaultAccount(this._web3)
 
+      if (await isOpenCollabRepo(this._repoPath)) {
+        this._isOpenCollabRepo = true
+        this._contractAddress = await common.getContractAddress(this._repoPath)
+      }
+      else
+        this._isOpenCollabRepo = false
 
-
-/**
- * Initialize an OpenCollab repo at a specified directory path
- * @param {string} directory 
- * @param {string} opts.name 
- * @param {string} opts.description
- * @param {number} opts.maintainerPercentage
- * @param {number} opts.voterRewardPercentage
- * @param {number} opts.voterPenaltyPercentage
- * @param {number} opts.voterDeposit
- * @param {number} opts.maintainerStake
- * @param {number} opts.contributorStake
- * @param {number} opts.challengerStake
- * @param {number} opts.reviewPeriodLength
- * @param {number} opts.votingCommitPeriodLength
- * @param {number} opts.votingRevealPeriodLength
- * @param {number} opts.tokenCount
- */
-function init(directory, opts = {}) {
-  if (!opts || !opts.name || !opts.description)
-    throw('Invalid options')
-  
-  const defaultParams = {
-    maintainerPercentage: 50,
-    voterRewardPercentage: 5,
-    voterPenaltyPercentage: 20,
-    voterDeposit: 1000000000000000000,
-    maintainerStake: 1000000000000000000,
-    contributorStake: 1000000000000000000,
-    challengerStake: 1000000000000000000,
-    reviewPeriodLength: 24 * 60 * 60, // 1 day
-    votingCommitPeriodLength: 24 * 60 * 60, // 1 day
-    votingRevealPeriodLength: 24 * 60 * 60, // 1 day
-    tokenCount: 60000000000000000000
+      this._isInitialized = true
+    }
   }
 
-  return ensureGitRepo(directory)
-          .then(() => getDefaultAccount())
-          .then(account => mangoInit(account, directory, Object.assign(defaultParams, opts)))
-}
 
-/**
- * Check the status of an OpenCollab repository
- * @param {string} directory 
- */
-async function status(directory) {
-  await ensureMangoRepo(directory)
-  let values = await Promise.all([getMangoAddress(directory), getDefaultAccount()])
-  let status = Object.assign({ mangoAddress: values[0], name: path.basename(directory).replace('.git', '') }, await mangoStatus(values[0], values[1]))
+  /**
+   * Initialize an OpenCollab repo at a specified directory path
+   * @param {string} opts.name 
+   * @param {string} opts.description
+   * @param {number} opts.maintainerPercentage
+   * @param {number} opts.voterRewardPercentage
+   * @param {number} opts.voterPenaltyPercentage
+   * @param {number} opts.voterDeposit
+   * @param {number} opts.maintainerStake
+   * @param {number} opts.contributorStake
+   * @param {number} opts.challengerStake
+   * @param {number} opts.reviewPeriodLength
+   * @param {number} opts.votingCommitPeriodLength
+   * @param {number} opts.votingRevealPeriodLength
+   * @param {number} opts.tokenCount
+   */
+  async init(opts = {}) {
+    if (!opts || !opts.name || !opts.description)
+      throw('Invalid options')
+
+    await this._init()
+    
+    const defaultParams = {
+      maintainerPercentage: 50,
+      voterRewardPercentage: 5,
+      voterPenaltyPercentage: 20,
+      voterDeposit: 1000000000000000000,
+      maintainerStake: 1000000000000000000,
+      contributorStake: 1000000000000000000,
+      challengerStake: 1000000000000000000,
+      reviewPeriodLength: 24 * 60 * 60, // 1 day
+      votingCommitPeriodLength: 24 * 60 * 60, // 1 day
+      votingRevealPeriodLength: 24 * 60 * 60, // 1 day
+      tokenCount: 60000000000000000000
+    }
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, null, this._account)
+
+    this._contractAddress = await mangoRepoLib.init(opts)
+    await common.createOpenCollabDirectory(this._repoPath, this._contractAddress)
+
+    return this._contractAddress
+  }
+
+
+  /**
+   * Returns the status of the OpenCollab repo
+   */
+  async status() {
+
+    await this._init()
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
   
-  let repoInfo = await Promise.all([ 
-      status.contract.getName(),
-      status.contract.getDescription(),
-      status.contract.issueCount()
+
+    const [name, description, issueCount, references, snapshots] = await Promise.all([ 
+      mangoRepoLib.mangoRepo.getName(),
+      mangoRepoLib.mangoRepo.getDescription(),
+      mangoRepoLib.mangoRepo.issueCount(),
+      mangoRepoLib.refs(),
+      mangoRepoLib.snapshots()
     ])
 
-  status.name = repoInfo[0]
-  status.description = repoInfo[1]
-  status.issueCount = repoInfo[2]
+    return {
+      name,
+      description,
+      issueCount,
+      mangoAddress: this._contractAddress,
+      contractAddress: this._contractAddress,
+      references,
+      snapshots,
+      contract: mangoRepoLib
+    }
+  }  
 
-  return status
+
 }
+
+
+
+
+
+async function init(directory, opts = {}) {
+  const repo = new OpenCollab(directory)
+  return repo.init(opts)
+}
+
+
+async function status(directory) {
+  const repo = new OpenCollab(directory)
+  return repo.status()
+}
+
 
 
 /**
