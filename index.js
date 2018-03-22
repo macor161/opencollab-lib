@@ -25,7 +25,7 @@ class OpenCollab {
       web3Host: 'localhost',
       web3Port: 8545
     }
-
+    
     this._repoPath = repoPath
     this._opts = Object.assign(defaultParams, opts)
     this._web3 = new Web3(new Web3.providers.HttpProvider(`http:\/\/${this._opts.web3Host}:${this._opts.web3Port}`))
@@ -210,6 +210,18 @@ class OpenCollab {
   }
 
 
+  async stakeIssue(issueId, stake) {
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
+    
+    return mangoRepoLib.stakeIssue(issueId, stake)
+  }
+
+
 }
 
 
@@ -276,23 +288,9 @@ function updateIssue(directory, issueId, newIssueContent) {
 }
 
 
-/**
- * @deprecated
- * Delete an issue for an OpenCollab repository
- * @param {string} directory 
- * @param {number} issueId
- */
-function deleteIssue(directory, issueId) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
-    .then(values => mangoDeleteIssue(values[0], values[1], issueId))
-}
-
-
 function stakeIssue(directory, issueId, stake) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
-    .then(values => mangoStakeIssue(values[0], values[1], issueId, stake))
+  const repo = new OpenCollab(directory)
+  return repo.stakeIssue(issueId, stake)
 }
 
 module.exports = {
@@ -302,7 +300,6 @@ module.exports = {
   getIssue,
   newIssue,
   updateIssue,
-  deleteIssue,
   stakeIssue,
   getDefaultAccount
 }
