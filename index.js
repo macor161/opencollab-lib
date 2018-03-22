@@ -192,6 +192,23 @@ class OpenCollab {
     return mangoRepoLib.newIssue(name, description, node.toJSON().multihash, isActive)
   }
 
+  /**
+   * Update a new issue for an OpenCollab repository
+   * @param {number} issueId
+   * @param {string} newIssueContent 
+   */
+  async updateIssue(issueId, newIssueContent) {  
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
+
+    const node = await this._ipfs.object.put({ Data: newIssueContent, Links: [] })
+    return mangoRepoLib.setIssue(issueId, node.toJSON().multihash)
+  }
+
 
 }
 
@@ -254,9 +271,8 @@ async function newIssue(directory, name, description, issueContent, isActive = t
  * @param {string} newIssueContent 
  */
 function updateIssue(directory, issueId, newIssueContent) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getDefaultAccount()]))
-    .then(values => mangoUpdateIssueIpfs(values[0], values[1], issueId, newIssueContent))
+  const repo = new OpenCollab(directory)
+  return repo.updateIssue(issueId, newIssueContent)
 }
 
 
