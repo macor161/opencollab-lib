@@ -1,7 +1,7 @@
-let assert = require('assert')
-let opencollab = require('../index')
-let fs = require('fs-extra')
-var chai = require('chai')
+const assert = require('assert')
+const opencollab = require('../index')
+const fs = require('fs-extra')
+const chai = require('chai')
 
 chai.use(require('chai-string'))
 
@@ -10,17 +10,16 @@ var { expect } = chai
 
 describe('status', () => {
 
-    before(done => {
-        fs.remove('test/tmp')
-        .then(() => fs.mkdirp('test/tmp'))
-        .then(() => done())
+    before(async () => {
+        await fs.remove('test/tmp')
+        await fs.mkdirp('test/tmp')
     })
     
-    it("should return status info", done => {
+    it("should return status info", async () => {
         const name = 'test name'
         const description = 'test description'
 
-        fs.mkdirp('test/tmp/status1/.git')
+        await fs.mkdirp('test/tmp/status1/.git')
         .then(() => opencollab.init('test/tmp/status1', { name, description }))
         .then(() => opencollab.status('test/tmp/status1'))
         .then(status => {

@@ -1,17 +1,14 @@
 const path = require('path')
-const shell = require('shelljs')
 const Web3 = require('web3')
 let ipfsAPI = require('ipfs-api')
-const ensureGitRepo = require('./lib/ensure-git-repo')
 const { getDefaultAccount } = require('./lib/web3-helpers')
 const { isOpenCollabRepo } = require('./lib/validation')
 const common = require('./lib/common')
 const initLib = require('./lib/init-lib')
-const { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue, mangoStakeIssue } = require('./lib/mango')
 
 
 
-class OpenCollab {
+module.exports = class OpenCollab {
 
   /**
    * Creates a new OpenCollab object based on a repository path
@@ -229,81 +226,3 @@ class OpenCollab {
 }
 
 
-
-
-
-async function init(directory, opts = {}) {
-  const repo = new OpenCollab(directory)
-  return repo.init(opts)
-}
-
-
-async function status(directory) {
-  const repo = new OpenCollab(directory)
-  return repo.status()
-}
-
-
-
-/**
- * List issues for an OpenCollab repository
- * @param {string} directory 
- */
-function issues(directory) {
-  const repo = new OpenCollab(directory)
-  return repo.issues()
-}
-
-
-/**
- * Get an issue for an OpenCollab repository
- * @param {string} directory 
- * @param {number} issueId
- */
-function getIssue(directory, issueId) {
-  const repo = new OpenCollab(directory)
-  return repo.getIssue(issueId)
-}
-
-
-/**
- * Create a new issue for an OpenCollab repository
- * @param {string} directory 
- * @param {string} name
- * @param {string} description
- * @param {string} issueContent 
- * @param {bool} isActive
- */
-async function newIssue(directory, name, description, issueContent, isActive = true) {
-  const repo = new OpenCollab(directory)
-  return repo.newIssue(name, description, issueContent, isActive)
-}
-
-
-/**
- * Update a new issue for an OpenCollab repository
- * @param {string} directory 
- * @param {number} issueId
- * @param {string} newIssueContent 
- */
-function updateIssue(directory, issueId, newIssueContent) {
-  const repo = new OpenCollab(directory)
-  return repo.updateIssue(issueId, newIssueContent)
-}
-
-
-function stakeIssue(directory, issueId, stake) {
-  const repo = new OpenCollab(directory)
-  return repo.stakeIssue(issueId, stake)
-}
-
-module.exports = {
-  init,
-  status,
-  issues,
-  getIssue,
-  newIssue,
-  updateIssue,
-  stakeIssue,
-  getDefaultAccount
-}
