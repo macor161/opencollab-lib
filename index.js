@@ -28,7 +28,7 @@ module.exports = class OpenCollab {
     this._web3 = new Web3(new Web3.providers.HttpProvider(`http:\/\/${this._opts.web3Host}:${this._opts.web3Port}`))
     this._isInitialized = false
 
-    this._init()
+    //this._init()
   }
 
   /**
@@ -91,6 +91,7 @@ module.exports = class OpenCollab {
     const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, null, this._account)
 
     this._contractAddress = await mangoRepoLib.init(opts)
+    this.isOpenCollabRepo = true
     await common.createOpenCollabDirectory(this._repoPath, this._contractAddress)
 
     return this._contractAddress

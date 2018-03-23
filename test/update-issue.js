@@ -17,9 +17,9 @@ describe('updateIssue', () => {
 
       const repo = new OpenCollab('test/tmp/update-issue4')
 
-      await opencollab.init({ name: 'test repo', description: 'description' })   
-      await opencollab.newIssue('name', 'description', 'test\n')
-      const issue = await repo.updateIssue('test/tmp/update-issue4', 0, 'test updated\n')
+      await repo.init({ name: 'test repo', description: 'description' })   
+      await repo.newIssue('name', 'description', 'test\n')
+      const issue = await repo.updateIssue(0, 'test updated\n')
 
       expect(issue).to.be.a('string')
 

@@ -17,7 +17,7 @@ describe('issues', () => {
       
       const repo = new OpenCollab('test/tmp/issues1')
 
-      await repo.issues('test123432\n')
+      await repo.issues()
       
       assert.fail()
     } catch(e) {   }     
@@ -30,7 +30,7 @@ describe('issues', () => {
 
       const repo = new OpenCollab('test/tmp/issues2')
 
-      await repo.issues('test123432\n')
+      await repo.issues()
       
       assert.fail()
     } catch(e) {  }    
@@ -42,10 +42,10 @@ describe('issues', () => {
 
       const repo = new OpenCollab('test/tmp/issues3')
 
-      await repo.init('test/tmp/issues3', { name: 'test repo', description: 'this is description' })
+      await repo.init({ name: 'test repo', description: 'this is description' })
 
-      await repo.newIssue('test/tmp/issues3', 'issue name', 'issue desc', 'test123432\n')
-      const issues = await repo.issues('test/tmp/issues3')
+      await repo.newIssue('issue name', 'issue desc', 'test123432\n')
+      const issues = await repo.issues()
 
       expect(issues).to.be.a('Array')
       expect(issues.length).to.equal(1)
