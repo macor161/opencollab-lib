@@ -130,6 +130,11 @@ module.exports = class OpenCollab {
     }
   }  
 
+  /**
+   * Returns the web3 account for this OpenCollab instance
+   */
+  async getWeb3Account() { return getDefaultAccount(this._web3) }
+
 
   /**
    * List issues for an OpenCollab repository
