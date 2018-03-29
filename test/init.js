@@ -1,5 +1,5 @@
 let assert = require('assert')
-let opencollab = require('../index')
+let OpenCollab = require('../index')
 let fs = require('fs-extra')
 let chai = require('chai')
 
@@ -10,39 +10,43 @@ let { expect } = chai
 
 describe('init', () => {
 
-    before(done => {
-        fs.remove('test/tmp')
-        .then(() => fs.mkdirp('test/tmp'))
-        .then(() => done())
+    before(async () => {
+        await fs.remove('test/tmp')
+        await fs.mkdirp('test/tmp')
     })    
 
-    it("should return the mango address", done => {
-        fs.mkdirp('test/tmp/init1/.git')
-        .then(() => opencollab.init('test/tmp/init1', { name: 'test repo', description: 'this is description' }))        
-        .then(result => {
-            
+    it("should return the mango address", async () => {
+
+        const repoPath = 'test/tmp/init1'
+
+        try {
+            await fs.mkdirp(`${repoPath}/.git`)
+            const repo = new OpenCollab(repoPath)
+            const result = await repo.init({ name: 'test repo', description: 'this is description' }) 
+
             expect(result).to.be.a('string')
             expect(result).to.startWith('0x')
 
-            done()
-        })
-        .catch(e => {
+        } catch(e) {
+            console.log(e)
             assert.fail()
-            done()
-        })        
+        }    
     })
 
     
-    it("should throw if no git repository is found", done => {
-        fs.mkdirp('test/tmp/init-no-git')
-        .then(() => opencollab.init('test/tmp/init-no-git'))        
-        .then(result => {
+    it("should throw if no git repository is found", async () => {
+        const repoPath = 'test/tmp/init-no-git'
+
+        try {
+            await fs.mkdirp(repoPath)
+            const repo = new OpenCollab(repoPath)
+            const result = await repo.init()
+            
             assert.fail()
-            done()
-        })
-        .catch(e => {         
-            done()
-        })
+        }
+        catch(e) {         
+            
+        }
     })
 
     

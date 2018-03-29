@@ -1,192 +1,234 @@
-let mkdirp = require('mkdirp')
-let fs = require('fs-extra')
-let path = require('path')
-let shell = require('shelljs')
-let Web3 = require('web3')
-
-let { ensureGitRepo } = require('./lib/ensure-git-repo')
-let initLib = require('./lib/init-lib')
-let { mangoInit, getMangoAddress, mangoStatus, ensureMangoRepo, mangoIssues, mangoGetIssue, mangoGetIssueIpfs, mangoNewIssueIpfs, mangoUpdateIssueIpfs, mangoDeleteIssue, mangoStakeIssue } = require('./lib/mango')
-
-
-const RPC_HOST = 'localhost'
-const RPC_PORT = '8545'
-
-const CONTRACT_DIR = '.mango/contract/'
-const ISSUES_DIR = '.mango/issues/'
-
-let argv = {
-  host: RPC_HOST,
-  port: RPC_PORT
-}
+const path = require('path')
+const Web3 = require('web3')
+let ipfsAPI = require('ipfs-api')
+const { getDefaultAccount } = require('./lib/web3-helpers')
+const { isOpenCollabRepo } = require('./lib/validation')
+const common = require('./lib/common')
+const initLib = require('./lib/init-lib')
 
 
 
+module.exports = class OpenCollab {
 
-function getAccount() {
-  const { host, port } = argv
+  /**
+   * Creates a new OpenCollab object based on a repository path
+   * 
+   * @param {string} repoPath
+   * @param {string} [opts.web3Host = 'localhost']
+   * @param {number} [opts.web3Port = 8545]
+   */
+  constructor(repoPath, opts = {}) {
+    const defaultParams = {
+      web3Host: 'localhost',
+      web3Port: 8545
+    }
+    
+    this._repoPath = repoPath
+    this._opts = Object.assign(defaultParams, opts)
+    this._web3 = new Web3(new Web3.providers.HttpProvider(`http:\/\/${this._opts.web3Host}:${this._opts.web3Port}`))
+    this._isInitialized = false
 
-  const provider = new Web3.providers.HttpProvider(`http:\/\/${host}:${port}`)
-  const web3 = new Web3(provider)
-
-  return new Promise((resolve, reject) => {
-    web3.eth.getAccounts((err, accounts) => {
-      if (err != null) {
-        reject(err);
-      } else {
-        resolve(accounts[0])
-      }
-    })
-  })
-}
-
-
-
-
-
-
-/**
- * Initialize an OpenCollab repo at a specified directory path
- * @param {string} directory 
- * @param {string} opts.name 
- * @param {string} opts.description
- * @param {number} opts.maintainerPercentage
- * @param {number} opts.voterRewardPercentage
- * @param {number} opts.voterPenaltyPercentage
- * @param {number} opts.voterDeposit
- * @param {number} opts.maintainerStake
- * @param {number} opts.contributorStake
- * @param {number} opts.challengerStake
- * @param {number} opts.reviewPeriodLength
- * @param {number} opts.votingCommitPeriodLength
- * @param {number} opts.votingRevealPeriodLength
- * @param {number} opts.tokenCount
- */
-function init(directory, opts = {}) {
-  if (!opts || !opts.name || !opts.description)
-    throw('Invalid options')
-  
-  const defaultParams = {
-    maintainerPercentage: 50,
-    voterRewardPercentage: 5,
-    voterPenaltyPercentage: 20,
-    voterDeposit: 1000000000000000000,
-    maintainerStake: 1000000000000000000,
-    contributorStake: 1000000000000000000,
-    challengerStake: 1000000000000000000,
-    reviewPeriodLength: 24 * 60 * 60, // 1 day
-    votingCommitPeriodLength: 24 * 60 * 60, // 1 day
-    votingRevealPeriodLength: 24 * 60 * 60, // 1 day
-    tokenCount: 60000000000000000000
+    //this._init()
   }
 
-  return ensureGitRepo(directory)
-          .then(() => getAccount())
-          .then(account => mangoInit(account, directory, Object.assign(defaultParams, opts)))
-}
+  /**
+   * Initialize inner state of object.
+   */
+  async _init() {
+    if (!this._isInitialized) {
 
-/**
- * Check the status of an OpenCollab repository
- * @param {string} directory 
- */
-async function status(directory) {
-  await ensureMangoRepo(directory)
-  let values = await Promise.all([getMangoAddress(directory), getAccount()])
-  let status = Object.assign({ mangoAddress: values[0], name: path.basename(directory).replace('.git', '') }, await mangoStatus(values[0], values[1]))
-  
-  let repoInfo = await Promise.all([ 
-      status.contract.getName(),
-      status.contract.getDescription(),
-      status.contract.issueCount()
+      this._account = await getDefaultAccount(this._web3)
+      this._ipfs = ipfsAPI('localhost', '5002', {protocol: 'http'}) 
+
+      if (await isOpenCollabRepo(this._repoPath)) {
+        this.isOpenCollabRepo = true
+        this._contractAddress = await common.getContractAddress(this._repoPath)
+      }
+      else
+        this.isOpenCollabRepo = false
+
+      this._isInitialized = true
+    }
+  }
+
+
+  /**
+   * Initialize an OpenCollab repo at a specified directory path
+   * @param {string} opts.name 
+   * @param {string} opts.description
+   * @param {number} opts.maintainerPercentage
+   * @param {number} opts.voterRewardPercentage
+   * @param {number} opts.voterPenaltyPercentage
+   * @param {number} opts.voterDeposit
+   * @param {number} opts.maintainerStake
+   * @param {number} opts.contributorStake
+   * @param {number} opts.challengerStake
+   * @param {number} opts.reviewPeriodLength
+   * @param {number} opts.votingCommitPeriodLength
+   * @param {number} opts.votingRevealPeriodLength
+   * @param {number} opts.tokenCount
+   */
+  async init(opts = {}) {
+    if (!opts || !opts.name || !opts.description)
+      throw('Invalid options')
+
+    await this._init()
+    
+    const defaultParams = {
+      maintainerPercentage: 50,
+      voterRewardPercentage: 5,
+      voterPenaltyPercentage: 20,
+      voterDeposit: 1000000000000000000,
+      maintainerStake: 1000000000000000000,
+      contributorStake: 1000000000000000000,
+      challengerStake: 1000000000000000000,
+      reviewPeriodLength: 24 * 60 * 60, // 1 day
+      votingCommitPeriodLength: 24 * 60 * 60, // 1 day
+      votingRevealPeriodLength: 24 * 60 * 60, // 1 day
+      tokenCount: 60000000000000000000
+    }
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, null, this._account)
+
+    this._contractAddress = await mangoRepoLib.init(opts)
+    this.isOpenCollabRepo = true
+    await common.createOpenCollabDirectory(this._repoPath, this._contractAddress)
+
+    return this._contractAddress
+  }
+
+
+  /**
+   * Returns the status of the OpenCollab repo
+   */
+  async status() {
+
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)  
+
+    const [name, description, issueCount, references, snapshots] = await Promise.all([ 
+      mangoRepoLib.mangoRepo.getName(),
+      mangoRepoLib.mangoRepo.getDescription(),
+      mangoRepoLib.mangoRepo.issueCount(),
+      mangoRepoLib.refs(),
+      mangoRepoLib.snapshots()
     ])
 
-  status.name = repoInfo[0]
-  status.description = repoInfo[1]
-  status.issueCount = repoInfo[2]
+    return {
+      name,
+      description,
+      issueCount,
+      mangoAddress: this._contractAddress,
+      contractAddress: this._contractAddress,
+      references,
+      snapshots,
+      contract: mangoRepoLib
+    }
+  }  
 
-  return status
+  /**
+   * Returns the web3 account for this OpenCollab instance
+   */
+  async getWeb3Account() { return getDefaultAccount(this._web3) }
+
+
+  /**
+   * List issues for an OpenCollab repository
+   * @param {string} directory 
+   */
+  async issues() {
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
+
+    return (await mangoRepoLib.issues())
+            .map((issueFields, i) => Object.assign({ id: i}, common.createIssueFromFieldsArray(issueFields)))
+  }
+
+  /**
+   * Get an issue for an OpenCollab repository
+   * @param {number} issueId
+   */
+  async getIssue(issueId) {
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
+
+    let issue = common.createIssueFromFieldsArray(await mangoRepoLib.getIssue(issueId))
+    issue.id = issueId
+    issue.content = (await this._ipfs.object.get(issue.hash)).toJSON().data.toString()
+
+    return issue
+  }
+
+
+  /**
+   * Create a new issue for an OpenCollab repository
+   * @param {string} name
+   * @param {string} description
+   * @param {string} issueContent 
+   * @param {bool} isActive
+   */
+  async newIssue(name, description, issueContent, isActive = true) {
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
+
+    const count = await mangoRepoLib.issueCount()
+
+    const id = count.toNumber()
+
+    const node = await this._ipfs.object.put({ Data: issueContent, Links: [] })
+    return mangoRepoLib.newIssue(name, description, node.toJSON().multihash, isActive)
+  }
+
+  /**
+   * Update a new issue for an OpenCollab repository
+   * @param {number} issueId
+   * @param {string} newIssueContent 
+   */
+  async updateIssue(issueId, newIssueContent) {  
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
+
+    const node = await this._ipfs.object.put({ Data: newIssueContent, Links: [] })
+    return mangoRepoLib.setIssue(issueId, node.toJSON().multihash)
+  }
+
+  /**
+   * Stake tokens to an issue
+   * @param {number} issueId 
+   * @param {number} stake 
+   */
+  async stakeIssue(issueId, stake) {
+    await this._init()
+
+    if (!this.isOpenCollabRepo)
+      throw 'Not an OpenCollab repository'
+
+    const mangoRepoLib = initLib(this._opts.web3Host, this._opts.web3Port, this._contractAddress, this._account)
+    
+    return mangoRepoLib.stakeIssue(issueId, stake)
+  }
+
+
 }
 
 
-/**
- * List issues for an OpenCollab repository
- * @param {string} directory 
- */
-function issues(directory) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoIssues(values[0], values[1]))
-}
-
-
-/**
- * Get an issue for an OpenCollab repository
- * @param {string} directory 
- * @param {number} issueId
- */
-function getIssue(directory, issueId) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    //.then(values => mangoGetIssueIpfs(values[0], values[1], issueId))
-    .then(values => mangoGetIssue(values[0], values[1], issueId))
-}
-
-
-/**
- * Create a new issue for an OpenCollab repository
- * @param {string} directory 
- * @param {string} name
- * @param {string} description
- * @param {string} issueContent 
- * @param {bool} isActive
- */
-function newIssue(directory, name, description, issueContent, isActive = true) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoNewIssueIpfs(values[0], values[1], name, description, issueContent, isActive))
-}
-
-
-/**
- * Update a new issue for an OpenCollab repository
- * @param {string} directory 
- * @param {number} issueId
- * @param {string} newIssueContent 
- */
-function updateIssue(directory, issueId, newIssueContent) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoUpdateIssueIpfs(values[0], values[1], issueId, newIssueContent))
-}
-
-
-/**
- * @deprecated
- * Delete an issue for an OpenCollab repository
- * @param {string} directory 
- * @param {number} issueId
- */
-function deleteIssue(directory, issueId) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoDeleteIssue(values[0], values[1], issueId))
-}
-
-
-function stakeIssue(directory, issueId, stake) {
-  return ensureMangoRepo(directory)
-    .then(() => Promise.all([getMangoAddress(directory), getAccount()]))
-    .then(values => mangoStakeIssue(values[0], values[1], issueId, stake))
-}
-
-module.exports = {
-  init,
-  status,
-  issues,
-  getIssue,
-  newIssue,
-  updateIssue,
-  deleteIssue,
-  stakeIssue,
-  getAccount
-}
